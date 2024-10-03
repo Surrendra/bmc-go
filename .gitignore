@@ -1,1 +1,42 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binary
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Go workspace and modules
+/go.work
+/go.work.sum
+/go.sum
+
+# Vendor directory
+/vendor/
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.pid
+*.pid.lock
+
+# Compiled object files
+*.o
+*.a
+
+# IDE and Editor settings
+.vscode/
+.idea/
+*.swp
+*~
+
+# Application-specific files
 .env
+config.yaml
