@@ -35,7 +35,8 @@
 .vscode/
 .idea/
 *.swp
-*~
+*~clear
+
 
 # Application-specific files
 .env
