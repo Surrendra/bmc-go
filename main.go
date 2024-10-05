@@ -30,5 +30,6 @@ func main() {
 		})
 	})
 	routes.SetupAuthenticationRoute(route)
+	routes.SetupInternalRoute(route)
 	route.Run()
 }
