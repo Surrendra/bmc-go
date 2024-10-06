@@ -2,8 +2,7 @@ package controllers
 
 import (
 	"BaliMediaCenter/helpers"
-	"BaliMediaCenter/middlewares"
-	"fmt"
+	"BaliMediaCenter/models"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,7 +17,14 @@ func NewNewsCategoryController(ResponseHelper helpers.ResponseHelper) *newsCateg
 }
 
 func (con newsCategoryController) GetData(c *gin.Context) {
-	user, _ := middlewares.GetSessionUser(c)
-	fmt.Println(user.)
-	con.ResponseHelper.ResponseSuccess(c, nil, "Success", 200)
+	// get news category
+	NewsCategories := []models.NewsCategory{}
+	models.DB.Preload("CreatedUser").Find(&NewsCategories)
+
+	res := []models.NewsCategoryResponse{}
+	for _, newsCategory := range NewsCategories {
+		res = append(res, newsCategory.ToResponse())
+	}
+	con.ResponseHelper.ResponseSuccess(c, res, "Success", 200)
+
 }

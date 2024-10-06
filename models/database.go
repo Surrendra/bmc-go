@@ -5,6 +5,7 @@ import (
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"log"
 	"os"
 )
 
@@ -30,8 +31,10 @@ func ConnectDatabase() {
 		fmt.Println("Something when wrong when connect to database !")
 	}
 
-	database.AutoMigrate(&User{})
-	
+	if err := database.AutoMigrate(&User{}, &NewsCategory{}); err != nil {
+		log.Fatalf("Migration failed: %v", err)
+	}
+
 	fmt.Println("Database migrated")
 
 	DB = database

@@ -7,8 +7,8 @@ type User struct {
 	Email       string `json:"email" gorm:"varchar(255) uniqueIndex index:code_index"`
 	Username    string `json:"username" gorm:"varchar(100) uniqueIndex index:username_index"`
 	Password    string `json:"password" gorm:"varchar(255)"`
-	LastToken   string `json:"last_token"`
-	UpdateToken bool   `json:"update_token"`
+	LastToken   string
+	updateToken bool
 	CreatedAt   string `json:"created_at" gorm:"timestamp"`
 	UpdatedAt   string `json:"updated_at" gorm:"timestamp"`
 }
