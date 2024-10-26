@@ -6,6 +6,7 @@ import (
 	"BaliMediaCenter/routes"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/log/v8"
 	"net/http"
 	"os"
 )
@@ -22,6 +23,9 @@ func main() {
 	} else {
 		gin.SetMode(gin.DebugMode)
 	}
+	log.RedirectGoStdLog(true)
+	defer log.WithTrace().Info("time to run")
+	log.Info("Test")
 
 	route := gin.Default()
 	route.GET("/health", func(context *gin.Context) {

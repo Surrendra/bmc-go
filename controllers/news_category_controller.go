@@ -26,5 +26,8 @@ func (con newsCategoryController) GetData(c *gin.Context) {
 		res = append(res, newsCategory.ToResponse())
 	}
 	con.ResponseHelper.ResponseSuccess(c, res, "Success", 200)
+}
+
+func (con newsCategoryController) Create(c *gin.Context) {
 
 }

@@ -32,6 +32,7 @@ type NewsCategoryResponse struct {
 	CreatedUserName string `json:"created_user_name"`
 	Image           string `json:"image"`
 	ImageURL        string `json:"image_url"`
+	CreatedUser     User   `gorm:"foreignkey:CreatedUserId;references:ID"`
 }
 
 func (u NewsCategory) ToResponse() NewsCategoryResponse {
@@ -44,5 +45,10 @@ func (u NewsCategory) ToResponse() NewsCategoryResponse {
 		CreatedUserId:   u.CreatedUserId,
 		CreatedUserName: u.CreatedUserName,
 		ImageURL:        u.GetImageURL(), // Populate the full image URL
+		CreatedUser:     u.CreatedUser,
 	}
+}
+
+type NewsCategoryValidation struct {
+	Name string `form:"name" json:"name" binding:"required" validate:"required"`
 }
