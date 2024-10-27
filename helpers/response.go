@@ -5,8 +5,7 @@ import (
 	"net/http"
 )
 
-type responseHelper struct {
-}
+type responseHelper struct{}
 
 func NewResponseHelper() *responseHelper {
 	return &responseHelper{}

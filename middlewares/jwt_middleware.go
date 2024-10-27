@@ -11,6 +11,17 @@ import (
 	"time"
 )
 
+type jwtMiddleware struct {
+}
+
+func NewJwtMiddleware() *jwtMiddleware {
+	return &jwtMiddleware{}
+}
+
+type JwtMiddleware interface {
+	GetSessionUser(c *gin.Context) *models.User
+}
+
 // Secret key for signing JWT tokens (should be securely loaded from environment in production)
 var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
 
@@ -48,7 +59,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		tokenString := c.GetHeader("Authorization")
 		// call responseHelper
 
-		fmt.Println(tokenString)
+		//fmt.Println(tokenString)
 		if tokenString == "" {
 			c.JSON(http.StatusUnauthorized, gin.H{"msg": "Authorization token required"})
 			c.Abort()
@@ -59,7 +70,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 			return jwtSecret, nil
 		})
-		fmt.Println(token, err)
+		//fmt.Println(token, err)
 		if err != nil || !token.Valid {
 			c.JSON(http.StatusUnauthorized, gin.H{"msg": "Invalid token"})
 			c.Abort()

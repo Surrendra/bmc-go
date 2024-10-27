@@ -1,25 +1,33 @@
 package models
 
-import "os"
+import (
+	"BaliMediaCenter/helpers"
+	"gorm.io/gorm"
+	"time"
+)
 
 type NewsCategory struct {
-	Id              int64  `json:"id" gorm:"primary_key"`
-	Code            string `json:"code" gorm:"unique"`
-	Slug            string `json:"slug" gorm:"unique"`
-	Name            string `json:"name"`
-	Description     string `json:"description"`
-	CreatedUserId   int64  `json:"created_user_id"`
-	CreatedUserName string `json:"created_user_name"`
-	Image           string `json:"image"`
-	ImageURL        string `json:"image_url"`
-	CreatedUser     User   `gorm:"foreignkey:CreatedUserId;references:ID"`
+	Id              int64     `json:"id" gorm:"primary_key"`
+	Code            string    `json:"code" gorm:"unique"`
+	Slug            string    `json:"slug" gorm:"unique"`
+	Name            string    `json:"name"`
+	Description     string    `json:"description"`
+	CreatedUserId   int64     `json:"created_user_id"`
+	CreatedUserName string    `json:"created_user_name"`
+	Image           string    `json:"image"`
+	ImageURL        string    `json:"image_url"`
+	CreatedUser     User      `gorm:"foreignkey:CreatedUserId;references:ID"`
+	CreatedAt       time.Time `json:"created_at" gorm:"autoCreateTime:true"`
+	UpdatedAt       time.Time `json:"updated_at" gorm:"autoUpdateTime:true"`
+	DeletedAt       gorm.DeletedAt
 }
 
 func (u NewsCategory) GetImageURL() string {
 	if u.Image == "" {
 		return ""
 	}
-	return os.Getenv("STORAGE_URL") + u.Image
+	StorageHelper := helpers.NewStorageHelper()
+	return StorageHelper.GetPublicUrl(u.Image)
 }
 
 type NewsCategoryResponse struct {
@@ -44,6 +52,7 @@ func (u NewsCategory) ToResponse() NewsCategoryResponse {
 		Description:     u.Description,
 		CreatedUserId:   u.CreatedUserId,
 		CreatedUserName: u.CreatedUserName,
+		Image:           u.Image,
 		ImageURL:        u.GetImageURL(), // Populate the full image URL
 		CreatedUser:     u.CreatedUser,
 	}

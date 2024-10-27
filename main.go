@@ -35,5 +35,7 @@ func main() {
 	})
 	routes.SetupAuthenticationRoute(route)
 	routes.SetupInternalRoute(route)
+	routes.SetupPublicRoute(route)
+
 	route.Run()
 }
