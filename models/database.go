@@ -31,7 +31,7 @@ func ConnectDatabase() {
 		fmt.Println("Something when wrong when connect to database !")
 	}
 
-	if err := database.AutoMigrate(&User{}, &NewsCategory{}); err != nil {
+	if err := database.AutoMigrate(&User{}, &NewsCategory{}, &News{}); err != nil {
 		log.Fatalf("Migration failed: %v", err)
 	}
 

@@ -53,7 +53,7 @@ func (s newsCategoryService) Delete(code string) {
 func (s newsCategoryService) GetPaginateData(pageSize int, pageIndex int) ([]models.NewsCategoryResponse, error) {
 	NewsCategories := []models.NewsCategory{}
 	offset := (pageIndex - 1) * pageSize
-	err := models.DB.Limit(pageSize).Offset(offset).Model(&NewsCategories).Find(&NewsCategories).Error
+	err := models.DB.Preload("CreatedUser").Limit(pageSize).Offset(offset).Model(&NewsCategories).Find(&NewsCategories).Error
 	if err != nil {
 		return nil, err
 	}

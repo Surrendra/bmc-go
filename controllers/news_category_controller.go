@@ -10,6 +10,7 @@ import (
 	"github.com/google/uuid"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 type newsCategoryController struct {
@@ -142,4 +143,25 @@ func (con newsCategoryController) Delete(c *gin.Context) {
 	}
 	NewsCategoryService.Delete(code)
 	con.ResponseHelper.ResponseSuccess(c, nil, "Successfully deleted the record", http.StatusOK)
+}
+
+func (con newsCategoryController) GetDataWithPagination(c *gin.Context) {
+	//fmt.Println("GetDataWithPagination : ", c.Param("page_index"))
+	NewsCategoryService := services.NewNewsCategoryService()
+	pageSize, _ := strconv.Atoi(c.Query("page_size"))
+	pageIndex, _ := strconv.Atoi(c.Query("page_index"))
+	if pageSize == 0 {
+		pageSize = 10
+	}
+	if pageIndex == 0 {
+		pageIndex = 1
+	}
+	//fmt.Println(pageSize, pageIndex)
+	newsCategoryResponse := []models.NewsCategoryResponse{}
+	newsCategoryResponse, errPaginate := NewsCategoryService.GetPaginateData(pageSize, pageIndex)
+	if errPaginate != nil {
+		con.ResponseHelper.ResponseBadRequest(c, nil, "Something wrong when get data")
+		return
+	}
+	con.ResponseHelper.ResponseSuccessWithPagination(c, newsCategoryResponse, pageSize, pageIndex)
 }

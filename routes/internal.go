@@ -21,6 +21,7 @@ func SetupInternalRoute(routes *gin.Engine) {
 		newsCategoryRoute := internalRoute.Group("/news_category")
 		{
 			newsCategoryRoute.GET("get_data", NewsCategoryController.GetData)
+			newsCategoryRoute.GET("get_data_with_pagination", NewsCategoryController.GetDataWithPagination)
 			newsCategoryRoute.POST("create", NewsCategoryController.Create)
 			newsCategoryRoute.GET("find_by_code/:code", NewsCategoryController.FindByCode)
 			newsCategoryRoute.PUT("update/:code", NewsCategoryController.Update)

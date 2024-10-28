@@ -18,6 +18,9 @@
 # Vendor directory
 /vendor/
 
+# storage directory
+/storages/*
+
 # Log files
 *.log
 
