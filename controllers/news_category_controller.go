@@ -138,7 +138,7 @@ func (con newsCategoryController) Delete(c *gin.Context) {
 	ExistingNewsCategory = NewsCategoryService.FindByCode(code)
 	if ExistingNewsCategory.Code == "" {
 		con.ResponseHelper.ResponseBadRequest(c, nil, "Product Category not found !")
-
+		return
 	}
 	NewsCategoryService.Delete(code)
 	con.ResponseHelper.ResponseSuccess(c, nil, "Successfully deleted the record", http.StatusOK)
